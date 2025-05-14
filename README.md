@@ -23,13 +23,25 @@ less
 Copy
 Edit
 
-## How to Install
+## How to Install (There are two methods): 
+1. Visit this link and drag the bookmarklet to your bookmark bar:
+https://morrowsend.github.io/go-to-github-repo.html
 
-1. Drag the link below to your bookmarks bar, or right-click and save as a bookmark:
+2. Create a new bookmark in your bookmark manager. Name it "Go to Github Repo" and paste the following in as the URL.
+   
+javascript:(function(){
+  const host = location.hostname;
+  const path = location.pathname.split('/').filter(Boolean);
+  if (host.endsWith('github.io') && path.length > 0) {
+    const user = host.split('.')[0];
+    const repo = path[0];
+    window.location.href = `https://github.com/${user}/${repo}`;
+  } else {
+    alert('Not a github.io project page or missing repo name.');
+  }
+})();
 
-**[Go to GitHub Repo](javascript:(function(){const host=location.hostname;const path=location.pathname.split('/').filter(Boolean);if(host.endsWith('github.io')&&path.length>0){const user=host.split('.')[0];const repo=path[0];window.location.href=`https://github.com/${user}/${repo}`;}else{alert('Not a github.io project page or missing repo name.');}})**
-)
-
+## How to use
 2. Visit a GitHub Pages project (e.g., `https://username.github.io/project`).
 3. Click the bookmarklet.
 
