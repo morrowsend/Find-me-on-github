@@ -25,7 +25,7 @@ Edit
 
 ## How to Install (There are two methods): 
 1. Visit this link and drag the bookmarklet to your bookmark bar:
-https://morrowsend.github.io/go-to-github-repo.html
+https://morrowsend.github.io/Find-me-on-github.html
 
 2. Create a new bookmark in your bookmark manager. Name it "Go to Github Repo" and paste the following in as the URL.
    
@@ -35,7 +35,18 @@ javascript:(function(){
   if (host.endsWith('github.io') && path.length > 0) {
     const user = host.split('.')[0];
     const repo = path[0];
-    window.location.href = `https://github.com/${user}/${repo}`;
+    const repoUrl = `https://github.com/${user}/${repo}`;
+    fetch(repoUrl, {method:'HEAD'})
+      .then(res => {
+        if (res.ok) {
+          location.href = repoUrl;
+        } else {
+          location.href = `https://github.com/${user}`;
+        }
+      })
+      .catch(() => {
+        location.href = `https://github.com/${user}`;
+      });
   } else {
     alert('Not a github.io project page or missing repo name.');
   }
